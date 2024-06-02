@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Anda telah logout</h1>
+    <p>Terima kasih telah menggunakan layanan kami.</p>
+    <div class="button">
+        <button onclick="redirectToLogin()">Login Lagi</button>
+    </div>
+
+    <script>
+        function redirectToLogin() {
+            window.location.href = 'login.html';
+        }
+
+        // Simulate logout by clearing session (for demo purposes)
+        // In a real application, you would also need to handle server-side session clearing
+        function logout() {
+            // Simulate clearing session or token
+            alert('Logout berhasil!');
+            redirectToLogin();
+        }
+
+        // Call the logout function immediately when the page loads
+        window.onload = logout;
+    </script>
+</body>
+</html>
