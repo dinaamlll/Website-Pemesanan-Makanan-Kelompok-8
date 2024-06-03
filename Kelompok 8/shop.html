@@ -27,6 +27,64 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
+	<script>
+        // Kode JavaScript untuk menangani logika keranjang belanja
+        let keranjang = [];
+
+        function tambahKeKeranjang(namaProduk, harga) {
+            // Tambahkan produk ke keranjang
+            keranjang.push({ namaProduk, harga });
+            tampilkanKeranjang();
+            alert(`${namaProduk} ditambahkan ke keranjang!`);
+        }
+
+        function tampilkanKeranjang() {
+            const containerItemKeranjang = document.getElementById('cart-items');
+            containerItemKeranjang.innerHTML = '';
+
+            keranjang.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                listItem.innerHTML = `
+                    ${item.namaProduk} - Rp. ${item.harga}
+                    <button class="btn btn-danger btn-sm" onclick="hapusDariKeranjang(${index})">Hapus</button>
+                `;
+                containerItemKeranjang.appendChild(listItem);
+            });
+
+            const totalHarga = keranjang.reduce((sum, item) => sum + item.harga, 0);
+            document.getElementById('cart-total').textContent = totalHarga;
+        }
+
+        function hapusDariKeranjang(index) {
+            keranjang.splice(index, 1);
+            tampilkanKeranjang();
+        }
+
+        function pergiKeCheckout() {
+            const totalHarga = keranjang.reduce((sum, item) => sum + item.harga, 0);
+
+            document.getElementById('order-items').value = JSON.stringify(keranjang);
+            document.getElementById('order-total').value = totalHarga;
+
+            document.getElementById('order-form').submit();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.btn-order').forEach(button => {
+                button.addEventListener('click', () => {
+                    const namaProduk = button.getAttribute('data-item');
+                    const harga = parseInt(button.getAttribute('data-price'));
+                    tambahKeKeranjang(namaProduk, harga);
+                });
+            });
+
+            document.getElementById('checkout-btn').addEventListener('click', pergiKeCheckout);
+        });
+    </script>
+</head>
+<body>
+    <main>
   </head>
   <body class="goto-here">
 		<div class="py-1 bg-primary">
@@ -92,339 +150,160 @@
     		<div class="row justify-content-center">
     			<div class="col-md-10 mb-5 text-center">
     				<ul class="product-category">
-						<div class="row mb-4">
-								<div class="col-md-12">
-								  <input type="text" id="search" class="form-control" placeholder="Cari menu...">
-								</div>
+ <!-- Search Bar -->
+ <div class="row mb-4">
+	<div class="col-md-12">
+	  <input type="text" id="search" class="form-control" placeholder="Cari menu...">
+	</div>
+  </div>
 							  </div>
 						  </div>
     				</ul>
     			</div>
     		</div>
 			
-			
 			<div class="container">
-				<div class="row">
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/mie ayam+bakso.jpeg" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Mie Ayam Bakso</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.50.000</span></p>
-										
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
+				<div class="row" id="menu-items">
+					<div class="col-md-4 mb-4 menu-item">
+						<div class="card">
+						  <img src="images/mie ayam+bakso.jpeg" class="card-img-top" alt="Mie Ayam+Bakso">
+						  <div class="card-body">
+							<h5 class="card-title">Mie Ayam+Bakso</h5>
+							<p class="card-text">Harga: Rp. 50.000</p>
+							<button class="btn btn-success btn-order" data-item="Mie Ayam+Bakso" data-price="17000">Pesan</button>
+						  </div>
 						</div>
-					</div>
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/mie ayam.jpg" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Mie Ayam</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.38.000</span></p>
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
+					  </div>
+					  <div class="col-md-4 mb-4 menu-item">
+						<div class="card">
+						  <img src="images/mie ayam.jpg" class="card-img-top" alt="Mie Ayam">
+						  <div class="card-body">
+							<h5 class="card-title">Mie Ayam</h5>
+							<p class="card-text">Harga: Rp. 38.000</p>
+							<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
+						  </div>
 						</div>
+					  </div>
+				  <div class="col-md-4 mb-4 menu-item">
+					<div class="card">
+					  <img src="images/bakso telur.jpg" class="card-img-top" alt="Bakso Telur">
+					  <div class="card-body">
+						<h5 class="card-title">Bakso Telur</h5>
+						<p class="card-text">Harga: Rp. 40.000</p>
+						<button class="btn btn-success btn-order" data-item="Bakso Telur" data-price="16000">Pesan</button>
+					  </div>
 					</div>
-			
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/mieayamceker.jpg" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Mie Ayam Ceker</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.43.000</span></p>
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+				  </div>
+				  <div class="col-md-4 mb-4 menu-item">
+					<div class="card">
+					  <img src="images/bakso jumbo.jpg" class="card-img-top" alt="Bakso Jumbo">
+					  <div class="card-body">
+						<h5 class="card-title">Bakso Jumbo</h5>
+						<p class="card-text">Harga: Rp. 55.000</p>
+						<button class="btn btn-success btn-order" data-item="Bakso Jumbo" data-price="20000">Pesan</button>
+					  </div>
 					</div>
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/bakso isi keju.jpg" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Bakso isi Keju</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.45.000</span></p>
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+				  </div>
+				  <div class="col-md-4 mb-4 menu-item">
+					<div class="card">
+					  <img src="images/mie-ayam-ceker.jpg" class="card-img-top" alt="Mie Ayam">
+					  <div class="card-body">
+						<h5 class="card-title">Mie Ayam Ceker</h5>
+						<p class="card-text">Harga: Rp. 43.000</p>
+						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
+					  </div>
 					</div>
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/bakso jumbo.jpg" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Bakso Jumbo</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.55.000</span></p>
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+				  </div>
+				  <div class="col-md-4 mb-4 menu-item">
+					<div class="card">
+					  <img src="images/bakso isi keju.jpg" class="card-img-top" alt="Bakso isi keju">
+					  <div class="card-body">
+						<h5 class="card-title">Bakso Isi Keju</h5>
+						<p class="card-text">Harga: Rp. 45.000</p>
+						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
+					  </div>
 					</div>
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/bakso telur.jpg" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Bakso Telur</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.40.000</span></p>
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+				  </div>
+				  <div class="col-md-4 mb-4 menu-item">
+					<div class="card">
+					  <img src="images/bakso jumbo.jpg" class="card-img-top" alt="bakso jumbo">
+					  <div class="card-body">
+						<h5 class="card-title">Bakso Jumbo</h5>
+						<p class="card-text">Harga: Rp. 55.000</p>
+						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
+					  </div>
 					</div>
-	
-	
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/bakso urat.png" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Bakso Urat</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.47.000</span></p>
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+				  </div>
+				  <div class="col-md-4 mb-4 menu-item">
+					<div class="card">
+					  <img src="images/bakso telur.jpg" class="card-img-top" alt="Bakso Telur">
+					  <div class="card-body">
+						<h5 class="card-title">Bakso Telur</h5>
+						<p class="card-text">Harga: Rp. 40.000</p>
+						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
+					  </div>
 					</div>
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/es teh.jpg" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Es Teh</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.10.000</span></p>
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+				  </div>
+				  <div class="col-md-4 mb-4 menu-item">
+					<div class="card">
+					  <img src="images/bakso urat.png" class="card-img-top" alt="Bakso Urat">
+					  <div class="card-body">
+						<h5 class="card-title">Bakso Urat</h5>
+						<p class="card-text">Harga: Rp. 47.000</p>
+						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
+					  </div>
 					</div>
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/jus-strawberry.jpg" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Jus Strawberry</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.16.000</span></p>
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+				  </div>
+				  <div class="col-md-4 mb-4 menu-item">
+					<div class="card">
+					  <img src="images/es teh.jpg" class="card-img-top" alt="EsTeh">
+					  <div class="card-body">
+						<h5 class="card-title">Es Teh</h5>
+						<p class="card-text">Harga: Rp. 10.000</p>
+						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
+					  </div>
 					</div>
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/juice jeruk.jpg" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Jus Jeruk</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.15.000</span></p>
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+				  </div>
+				  <div class="col-md-4 mb-4 menu-item">
+					<div class="card">
+					  <img src="images/jus-strawberry.jpg" class="card-img-top" alt="Jus Strawberry">
+					  <div class="card-body">
+						<h5 class="card-title">Jus Strawberry</h5>
+						<p class="card-text">Harga: Rp. 16.000</p>
+						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
+					  </div>
 					</div>
-					<div class="col-md-6 col-lg-3 ftco-animate">
-						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/juice mangga.jpg" alt="Colorlib Template">
-								<div class="overlay"></div>
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">Jus Mangga</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<p class="price"><span>Rp.17.000</span></p>
-									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="ion-ios-cart"></i></span>
-										</a>
-										<a href="#" class="heart d-flex justify-content-center align-items-center ">
-											<span><i class="ion-ios-heart"></i></span>
-										</a>
-									</div>
-								</div>
-								
-							</div>
-						</div>
+				  </div>
+				  <div class="col-md-4 mb-4 menu-item">
+					<div class="card">
+					  <img src="images/es jeruk.jpeg" class="card-img-top" alt="Es Jeruk">
+					  <div class="card-body">
+						<h5 class="card-title">Es Jeruk</h5>
+						<p class="card-text">Harga: Rp. 15.000</p>
+						<button class="btn btn-success btn-order" data-item="Es Jeruk" data-price="5000">Pesan</button>
+					  </div>
 					</div>
-			
-
-
+				  </div>
 				</div>
-				
-    </section>
+			  </section>
+		  
+			  <!-- Keranjang belanja -->
+			  <section class="container my-4">
+				<h3>Keranjang Belanja</h3>
+				<ul class="list-group" id="cart-items"></ul>
+				<div class="text-right my-3">
+					<h4>Total: Rp. <span id="cart-total">0</span></h4>
+					<button class="btn btn-primary" id="checkout-btn">Checkout</button>
+				</div>
+			</section>
 	
+			<!-- Hidden form for checkout -->
+			<form id="order-form" action="checkout.html" method="GET" style="display:none;">
+				<input type="hidden" name="items" id="order-items">
+				<input type="hidden" name="total" id="order-total">
+			</form>
+		</main>
+		  
     <footer class="ftco-footer ftco-section">
       <div class="container">
       	<div class="row">
@@ -522,7 +401,44 @@
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
     
-  
+  <script>
+    $(document).ready(function() {
+      let orderItems = [];
+      let totalPrice = 0;
+
+      $('.btn-order').click(function() {
+        const itemName = $(this).data('item');
+        const itemPrice = $(this).data('price');
+        
+        orderItems.push({name: itemName, price: itemPrice});
+        totalPrice += itemPrice;
+
+        // Update cart UI
+        $('#cart-items').append('<li class="list-group-item">' + itemName + ' - Rp. ' + itemPrice + '</li>');
+        $('#cart-total').text(totalPrice);
+
+        // Serialize the order items and total price
+        $('#order-items').val(JSON.stringify(orderItems));
+        $('#order-total').val(totalPrice);
+      });
+
+      $('#search').on('keyup', function() {
+        var value = $(this).val().toLowerCase();
+        $('#menu-items .menu-item').filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+      });
+
+      $('#checkout-btn').click(function() {
+        if (orderItems.length > 0) {
+          // Submit the form to payment page
+          $('#order-form').submit();
+        } else {
+          alert('Keranjang belanja Anda kosong.');
+        }
+      });
+    });
+  </script>
   
   </body>
 </html>
