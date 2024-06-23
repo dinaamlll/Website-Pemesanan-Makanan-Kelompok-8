@@ -27,16 +27,40 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
+
 	<script>
+	// Function to perform search
+function search() {
+        // Mendapatkan nilai input pencarian
+        var input = document.getElementById('search').value.toUpperCase();
+        // Mendapatkan semua item-menu
+        var items = document.getElementsByClassName('product');
+
+        // Melakukan iterasi pada setiap item-menu
+        for (var i = 0; i < items.length; i++) {
+            // Mendapatkan judul item-menu
+            var title = items[i].getElementsByClassName('card-title')[0];
+            // Jika judul item-menu mengandung kata kunci pencarian, tampilkan item-menu tersebut, jika tidak, sembunyikan
+            if (title.innerHTML.toUpperCase().indexOf(input) > -1) {
+                items[i].style.display = "";
+            } else {
+                items[i].style.display = "none";
+            }
+        }
+}
+
+
         // Kode JavaScript untuk menangani logika keranjang belanja
         let keranjang = [];
+		function tambahKeKeranjang(namaProduk, harga) {
+    // Tambahkan produk ke keranjang
+    keranjang.push({ namaProduk, harga });
+    tampilkanKeranjang();
 
-        function tambahKeKeranjang(namaProduk, harga) {
-            // Tambahkan produk ke keranjang
-            keranjang.push({ namaProduk, harga });
-            tampilkanKeranjang();
-            alert(`${namaProduk} ditambahkan ke keranjang!`);
-        }
+    // Tampilkan alert bahwa menu telah ditambahkan ke keranjang
+    alert(namaProduk + ' telah ditambahkan ke keranjang belanja.');
+}
+
 
         function tampilkanKeranjang() {
             const containerItemKeranjang = document.getElementById('cart-items');
@@ -153,7 +177,8 @@
  <!-- Search Bar -->
  <div class="row mb-4">
 	<div class="col-md-12">
-	  <input type="text" id="search" class="form-control" placeholder="Cari menu...">
+		<input type="text" id="search" class="form-control" placeholder="Cari menu..." onkeyup="search()">
+
 	</div>
   </div>
 							  </div>
@@ -163,133 +188,259 @@
     		</div>
 			
 			<div class="container">
-				<div class="row" id="menu-items">
-					<div class="col-md-4 mb-4 menu-item">
-						<div class="card">
-						  <img src="images/mie ayam+bakso.jpeg" class="card-img-top" alt="Mie Ayam+Bakso">
-						  <div class="card-body">
-							<h5 class="card-title">Mie Ayam+Bakso</h5>
-							<p class="card-text">Harga: Rp. 50.000</p>
-							<button class="btn btn-success btn-order" data-item="Mie Ayam+Bakso" data-price="17000">Pesan</button>
-						  </div>
+				<div class="row">
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/mie ayam+bakso.jpeg"alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Mie Ayam Bakso</h5>
+									<p class="card-text">Harga: Rp. 50.000</p>
+									<button class="btn btn-success btn-order" data-item="Mie Ayam Bakso" data-price="50000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
 						</div>
-					  </div>
-					  <div class="col-md-4 mb-4 menu-item">
-						<div class="card">
-						  <img src="images/mie ayam.jpg" class="card-img-top" alt="Mie Ayam">
-						  <div class="card-body">
-							<h5 class="card-title">Mie Ayam</h5>
-							<p class="card-text">Harga: Rp. 38.000</p>
-							<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
-						  </div>
+					</div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/mie ayam.jpg" alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Mie Ayam</h5>
+									<p class="card-text">Harga: Rp. 38.000</p>
+									<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="38000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
 						</div>
-					  </div>
-				  <div class="col-md-4 mb-4 menu-item">
-					<div class="card">
-					  <img src="images/bakso telur.jpg" class="card-img-top" alt="Bakso Telur">
-					  <div class="card-body">
-						<h5 class="card-title">Bakso Telur</h5>
-						<p class="card-text">Harga: Rp. 40.000</p>
-						<button class="btn btn-success btn-order" data-item="Bakso Telur" data-price="16000">Pesan</button>
-					  </div>
 					</div>
-				  </div>
-				  <div class="col-md-4 mb-4 menu-item">
-					<div class="card">
-					  <img src="images/bakso jumbo.jpg" class="card-img-top" alt="Bakso Jumbo">
-					  <div class="card-body">
-						<h5 class="card-title">Bakso Jumbo</h5>
-						<p class="card-text">Harga: Rp. 55.000</p>
-						<button class="btn btn-success btn-order" data-item="Bakso Jumbo" data-price="20000">Pesan</button>
-					  </div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/mieayamceker.jpg" alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Mie Ayam Ceker</h5>
+									<p class="card-text">Harga: Rp. 43.000</p>
+									<button class="btn btn-success btn-order" data-item="Mie Ayam Ceker" data-price="43000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
+						</div>
 					</div>
-				  </div>
-				  <div class="col-md-4 mb-4 menu-item">
-					<div class="card">
-					  <img src="images/mie-ayam-ceker.jpg" class="card-img-top" alt="Mie Ayam">
-					  <div class="card-body">
-						<h5 class="card-title">Mie Ayam Ceker</h5>
-						<p class="card-text">Harga: Rp. 43.000</p>
-						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
-					  </div>
+					
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/bakso isi keju.jpg"alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Bakso isi Keju</h5>
+									<p class="card-text">Harga: Rp. 45.000</p>
+									<button class="btn btn-success btn-order" data-item="Bakso isi Keju" data-price="45000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
+						</div>
 					</div>
-				  </div>
-				  <div class="col-md-4 mb-4 menu-item">
-					<div class="card">
-					  <img src="images/bakso isi keju.jpg" class="card-img-top" alt="Bakso isi keju">
-					  <div class="card-body">
-						<h5 class="card-title">Bakso Isi Keju</h5>
-						<p class="card-text">Harga: Rp. 45.000</p>
-						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
-					  </div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/bakso jumbo.jpg" alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Bakso Jumbo</h5>
+									<p class="card-text">Harga: Rp. 55.000</p>
+									<button class="btn btn-success btn-order" data-item="Bakso Jumbo" data-price="55000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
+						</div>
 					</div>
-				  </div>
-				  <div class="col-md-4 mb-4 menu-item">
-					<div class="card">
-					  <img src="images/bakso jumbo.jpg" class="card-img-top" alt="bakso jumbo">
-					  <div class="card-body">
-						<h5 class="card-title">Bakso Jumbo</h5>
-						<p class="card-text">Harga: Rp. 55.000</p>
-						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
-					  </div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/bakso telur.jpg" alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Bakso Telur</h5>
+									<p class="card-text">Harga: Rp. 40.000</p>
+									<button class="btn btn-success btn-order" data-item="Bakso Telur" data-price="40000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
+						</div>
 					</div>
-				  </div>
-				  <div class="col-md-4 mb-4 menu-item">
-					<div class="card">
-					  <img src="images/bakso telur.jpg" class="card-img-top" alt="Bakso Telur">
-					  <div class="card-body">
-						<h5 class="card-title">Bakso Telur</h5>
-						<p class="card-text">Harga: Rp. 40.000</p>
-						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
-					  </div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/bakso urat.png"alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Bakso Urat</h5>
+									<p class="card-text">Harga: Rp. 47.000</p>
+									<button class="btn btn-success btn-order" data-item="Bakso Urat" data-price="47000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
+						</div>
 					</div>
-				  </div>
-				  <div class="col-md-4 mb-4 menu-item">
-					<div class="card">
-					  <img src="images/bakso urat.png" class="card-img-top" alt="Bakso Urat">
-					  <div class="card-body">
-						<h5 class="card-title">Bakso Urat</h5>
-						<p class="card-text">Harga: Rp. 47.000</p>
-						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
-					  </div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/pangsiet.jpg"alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Pangsit</h5>
+									<p class="card-text">Harga: Rp. 17.000</p>
+									<button class="btn btn-success btn-order" data-item="Pangsit" data-price="17000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
+						</div>
 					</div>
-				  </div>
-				  <div class="col-md-4 mb-4 menu-item">
-					<div class="card">
-					  <img src="images/es teh.jpg" class="card-img-top" alt="EsTeh">
-					  <div class="card-body">
-						<h5 class="card-title">Es Teh</h5>
-						<p class="card-text">Harga: Rp. 10.000</p>
-						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
-					  </div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/TAHU BAKSO GORENG.jpg"alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Tahu Isi Bakso</h5>
+									<p class="card-text">Harga: Rp. 20.000</p>
+									<button class="btn btn-success btn-order" data-item="Tahu Isi Bakso" data-price="20000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								</div>
+							</div>
+						</div>
 					</div>
-				  </div>
-				  <div class="col-md-4 mb-4 menu-item">
-					<div class="card">
-					  <img src="images/jus-strawberry.jpg" class="card-img-top" alt="Jus Strawberry">
-					  <div class="card-body">
-						<h5 class="card-title">Jus Strawberry</h5>
-						<p class="card-text">Harga: Rp. 16.000</p>
-						<button class="btn btn-success btn-order" data-item="Mie Ayam" data-price="15000">Pesan</button>
-					  </div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/es teh.jpg" alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Es Teh</h5>
+									<p class="card-text">Harga: Rp. 10.000</p>
+									<button class="btn btn-success btn-order" data-item="Es Teh" data-price="10000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
+						</div>
 					</div>
-				  </div>
-				  <div class="col-md-4 mb-4 menu-item">
-					<div class="card">
-					  <img src="images/es jeruk.jpeg" class="card-img-top" alt="Es Jeruk">
-					  <div class="card-body">
-						<h5 class="card-title">Es Jeruk</h5>
-						<p class="card-text">Harga: Rp. 15.000</p>
-						<button class="btn btn-success btn-order" data-item="Es Jeruk" data-price="5000">Pesan</button>
-					  </div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/jus-strawberry.jpg" alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Jus Strawberry</h5>
+									<p class="card-text">Harga: Rp.16.000</p>
+									<button class="btn btn-success btn-order" data-item="Jus Strawberry" data-price="16000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
+						</div>
 					</div>
-				  </div>
-				</div>
-			  </section>
-		  
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/juice jeruk.jpg" alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Es Jeruk</h5>
+									<p class="card-text">Harga: Rp. 15.000</p>
+									<button class="btn btn-success btn-order" data-item="Es Jeruk" data-price="15000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="product">
+							<a href="#" class="img-prod"><img class="img-fluid" src="images/juice mangga.jpg" alt="Colorlib Template">
+								<div class="overlay"></div>
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<div class="card-body">
+									<h5 class="card-title">Jus Mangga</h5>
+									<p class="card-text">Harga: Rp. 17.000</p>
+									<button class="btn btn-success btn-order" data-item="Jus Mangga" data-price="17000">Pesan</button>
+								</div>
+							</div>
+							<div class="bottom-area d-flex px-3">
+								<div class="m-auto d-flex">
+								
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				
 			  <!-- Keranjang belanja -->
 			  <section class="container my-4">
-				<h3>Keranjang Belanja</h3>
+				<h3>Tambahkan ke Keranjang</h3>
 				<ul class="list-group" id="cart-items"></ul>
 				<div class="text-right my-3">
 					<h4>Total: Rp. <span id="cart-total">0</span></h4>
@@ -401,44 +552,9 @@
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
     
-  <script>
-    $(document).ready(function() {
-      let orderItems = [];
-      let totalPrice = 0;
+  
 
-      $('.btn-order').click(function() {
-        const itemName = $(this).data('item');
-        const itemPrice = $(this).data('price');
         
-        orderItems.push({name: itemName, price: itemPrice});
-        totalPrice += itemPrice;
-
-        // Update cart UI
-        $('#cart-items').append('<li class="list-group-item">' + itemName + ' - Rp. ' + itemPrice + '</li>');
-        $('#cart-total').text(totalPrice);
-
-        // Serialize the order items and total price
-        $('#order-items').val(JSON.stringify(orderItems));
-        $('#order-total').val(totalPrice);
-      });
-
-      $('#search').on('keyup', function() {
-        var value = $(this).val().toLowerCase();
-        $('#menu-items .menu-item').filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-        });
-      });
-
-      $('#checkout-btn').click(function() {
-        if (orderItems.length > 0) {
-          // Submit the form to payment page
-          $('#order-form').submit();
-        } else {
-          alert('Keranjang belanja Anda kosong.');
-        }
-      });
-    });
-  </script>
   
   </body>
 </html>
