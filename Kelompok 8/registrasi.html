@@ -19,9 +19,25 @@
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 10px; /* Gaya inline untuk menambahkan margin bottom pada input */
         }
         .button {
             margin-top: 20px;
+        }
+        .button button {
+            padding: 10px 20px;
+            background-color: #4CAF50;;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .button button:hover {
+        background-color:  #45a049;;;
         }
     </style>
 </head>
@@ -30,11 +46,11 @@
     <form id="register-form" onsubmit="handleRegister(event)">
         <div class="form-group">
             <label for="reg-username">Username:</label>
-            <input type="text" id="reg-username" required>
+            <input type="text" id="reg-username" required style="margin-bottom: 10px;"> <!-- Gaya inline untuk menambahkan margin bottom pada input -->
         </div>
         <div class="form-group">
             <label for="reg-password">Password:</label>
-            <input type="password" id="reg-password" required>
+            <input type="password" id="reg-password" required style="margin-bottom: 10px;"> <!-- Gaya inline untuk menambahkan margin bottom pada input -->
         </div>
         <div class="button">
             <button type="submit">Register</button>
